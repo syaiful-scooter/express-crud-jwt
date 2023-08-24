@@ -1,0 +1,32 @@
+exports.getAllCategories = (req, res) => {
+  res.status(200).json({
+    status: "success",
+    data: [
+      { id: "01", nama: "Iphone" },
+      { id: "02", nama: "Android" },
+      { id: "03", nama: "Laptop" },
+    ],
+  });
+};
+
+
+exports.storeCategory = (req, res) => {
+
+    let name =  req.body.name;
+    let description =  req.body.description;
+    
+    console.log( name);
+    console.log( description);
+    
+    if(!name && !description){
+        res.status(400).json({
+            status: "fail",
+            error: "Validasi Gagal"
+        })
+    }
+
+    return res.status(200).json({
+        status: "success",
+        error: "Validasi Berhasil"
+    });
+};
