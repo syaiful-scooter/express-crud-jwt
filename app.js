@@ -14,3 +14,5 @@ app.use('/api/v1/categories', CategoriesRouter)
 app.listen(port, ()=>{
     console.log(`Aplikasi Server berjalan di Port = ${port}`);
 })
+
+// app.listen();
