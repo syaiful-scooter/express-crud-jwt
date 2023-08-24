@@ -1,5 +1,6 @@
-const express =require('express');
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+const {getAllCategories, storeCategory} = require('../controllers/categoryController');
 
 
 // Routing
@@ -7,23 +8,29 @@ const router = express.Router()
 //   res.send('Hello World!')
 // })
 
-router.get('/', (req, res) => {
-  res.json({
-    message : 'Hello World!', 
-    data:[
-        {
-            id:'01', nama:"Iphone"
-        },
-        {
-            id:'02', nama:"Android"
-        }
-    ]
-    })
-})
+// router.get('/', (req, res) => {
+//   res.json({
+//     message : 'Hello World!', 
+//     data:[
+//         {
+//             id:'01', nama:"Iphone"
+//         },
+//         {
+//             id:'02', nama:"Android"
+//         }
+//     ]
+//     })
+// })
 
-router.post('/', (req, res) => {
-  res.send('Got a POST request. dari method post')
-})
+
+router.get('/', getAllCategories)
+
+// router.post('/', (req, res) => {
+//   res.send('Got a POST request. dari method post')
+// })
+
+router.post('/', storeCategory)
+
 
 // localhost:3000/api/v1/categories/users/4546/books/789
 router.get('/users/:userId/books/:bookId', (req, res) => {
