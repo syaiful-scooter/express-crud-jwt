@@ -28,7 +28,7 @@ exports.getAllCategories = async (req, res) => {
 
 };
 
-exports.detailsCategories = async(req, res)=>{
+exports.detailsCategory = async(req, res)=>{
   try {
     const id = req.params.id
     const categories = await Category.findByPk(id);
@@ -53,15 +53,47 @@ exports.detailsCategories = async(req, res)=>{
   }
 }
 
+exports.updateCategory = async(req, res)=>{
+  try {
+    const id = req.params.id
+    await Category.update(req.body, {
+      where: {
+        id: id
+      }
+    });
+
+    const updatedCategories = await Category.findByPk(id);
+    
+    if(!updatedCategories){
+      return res.status(404).json({
+        status: "Fail",
+        error: "Data id tidak ditemukan"
+      })
+    }
+
+    return res.status(200).json({
+      status:"Success",
+      data : updatedCategories
+    })
+    
+  } catch (error) {
+    console.log(error);
+      return res.status(500).json({
+        status:'Fail',
+        error : "Server Down"
+    })
+  }
+}
+
 
 exports.storeCategory = async (req, res) => {
-
-    // let name =  req.body.name;
-    // let description =  req.body.description;
-    
-    // console.log( name);
-    // console.log( description);
-
+  
+  // let name =  req.body.name;
+  // let description =  req.body.description;
+  
+  // console.log( name);
+  // console.log( description);
+  
     try {
       let {name, description} = req.body
       const newCategory = await Category.create(
@@ -91,3 +123,34 @@ exports.storeCategory = async (req, res) => {
     // }
 
 };
+
+exports.deleteCategory = async(req, res)=>{
+  try {
+    const id = req.params.id
+    const dataKategori = await Category.findByPk(id);
+    
+    if(!dataKategori){
+      return res.status(404).json({
+        status: "Fail",
+        error: "Data id tidak ditemukan"
+      })
+    }
+
+    await Category.destroy({
+      where: {
+        id
+      }
+    });
+
+    return res.status(200).json({
+        status:`Hapus data id ${id} berhasil`,
+    })
+    
+  } catch (error) {
+    // console.log(error);
+      return res.status(500).json({
+        status:'Fail',
+        error : "Server Down"
+    })
+  }
+}

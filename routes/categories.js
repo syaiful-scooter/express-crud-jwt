@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {getAllCategories, storeCategory, detailsCategories} = require('../controllers/categoryController');
+const {getAllCategories, storeCategory, detailsCategory, updateCategory, deleteCategory} = require('../controllers/categoryController');
 
 
 // Routing
@@ -26,7 +26,13 @@ const {getAllCategories, storeCategory, detailsCategories} = require('../control
 router.get('/', getAllCategories)
 
 // Detail data 
-router.get('/:id', detailsCategories)
+router.get('/:id', detailsCategory)
+
+// UPDATE data by param id 
+router.put('/:id', updateCategory)
+
+// DELETE data by param id 
+router.delete('/:id', deleteCategory)
 
 // router.post('/', (req, res) => {
 //   res.send('Got a POST request. dari method post')
