@@ -13,7 +13,7 @@ module.exports = {
      * }], {});
     */
 
-    return queryInterface.bulkInsert('Categories', [[
+    return queryInterface.bulkInsert('Categories', [
       {
         id: 1,
         name: 'Iphone',
