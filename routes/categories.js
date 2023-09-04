@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {getAllCategories, storeCategory} = require('../controllers/categoryController');
+const {getAllCategories, storeCategory, detailsCategories} = require('../controllers/categoryController');
 
 
 // Routing
@@ -22,13 +22,17 @@ const {getAllCategories, storeCategory} = require('../controllers/categoryContro
 //     })
 // })
 
-
+// Read data dg findAll
 router.get('/', getAllCategories)
+
+// Detail data 
+router.get('/:id', detailsCategories)
 
 // router.post('/', (req, res) => {
 //   res.send('Got a POST request. dari method post')
 // })
 
+//create data
 router.post('/', storeCategory)
 
 

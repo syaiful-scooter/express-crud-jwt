@@ -1,16 +1,57 @@
 const {Category} = require('../models')
 
-exports.getAllCategories = (req, res) => {
-  console.log(req.requestTime);
-  res.status(200).json({
-    status: "success",
-    data: [
-      { id: "01", nama: "Iphone" },
-      { id: "02", nama: "Android" },
-      { id: "03", nama: "Laptop" },
-    ],
-  });
+exports.getAllCategories = async (req, res) => {
+  // console.log(req.requestTime);
+  // res.status(200).json({
+  //   status: "success",
+  //   data: [
+  //     { id: "01", nama: "Iphone" },
+  //     { id: "02", nama: "Android" },
+  //     { id: "03", nama: "Laptop" },
+  //   ],
+  // });
+
+  try {
+    const categories = await Category.findAll();
+    return res.status(200).json({
+      status:"Success",
+      data : categories
+    })
+    
+  } catch (error) {
+    return res.status(500).json({
+      status:'Fail',
+      error : "Data tidak ketemu"
+    })
+  }
+
+
 };
+
+exports.detailsCategories = async(req, res)=>{
+  try {
+    const id = req.params.id
+    const categories = await Category.findByPk(id);
+
+    if(!categories){
+      return res.status(404).json({
+        status: "Fail",
+        error: "Data id tidak ditemukan"
+      })
+    }
+
+    return res.status(200).json({
+      status:"Success",
+      data : categories
+    })
+    
+  } catch (error) {
+      return res.status(500).json({
+        status:'Fail',
+        error : "Data detail, id segitu gakk ketemu"
+    })
+  }
+}
 
 
 exports.storeCategory = async (req, res) => {
