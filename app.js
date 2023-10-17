@@ -4,8 +4,11 @@ const app = express();
 const dotenv = require('dotenv')
 const cors = require('cors')
 
-const CategoriesRouter = require('./routes/categories');
+// 👇️ configure CORS
+app.use(cors());
 
+const CategoriesRouter = require('./routes/categories');
+const mahasiswasRoutes =  require('./routes/mahasiswasRoutes')
 dotenv.config()
 
 // Midleware
@@ -18,6 +21,7 @@ app.use((req, res, next)=>{
 
 // Routing
 app.use('/api/v1/categories', CategoriesRouter)
+app.use('/api/v2/mhs', mahasiswasRoutes)
 
 // Server
 const port = process.env.PORT;
