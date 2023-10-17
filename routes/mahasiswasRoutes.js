@@ -1,21 +1,11 @@
 const express = require('express');
-const { getAllMahasiswas } = require('../controllers/mahasiswaController');
+const { getAllMahasiswas, getOneMhs, simpanMhs, editMhs, hapusMhs } = require('../controllers/mahasiswaController');
 const router = express.Router();
 
-
-// router.get('/', (req, res) => {
-//   res.json({
-//     message : 'Hello World!', 
-//     data:[
-//         {
-//             id:'01', nama:"Iphone"
-//         },
-//         {
-//             id:'02', nama:"Android"
-//         }
-//     ]
-//     })
-// })
 router.get("/", getAllMahasiswas)
+router.post("/:id", getOneMhs)
+router.post("/", simpanMhs)
+router.put("/:id", editMhs)
+router.delete("/:id", hapusMhs)
 
 module.exports = router

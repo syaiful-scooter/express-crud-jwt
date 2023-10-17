@@ -85,7 +85,6 @@ exports.updateCategory = async(req, res)=>{
   }
 }
 
-
 exports.storeCategory = async (req, res) => {
   
   // let name =  req.body.name;
