@@ -13,18 +13,20 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('Roles', [
-      {
-        id: v4(),
-        name: 'user'
-      },
-      {
-        id: v4(),
-        name: 'admin'
-      }
-        
+  await queryInterface.bulkInsert('Roles', [
+    {
+      id: v4(),
+      name: 'user'
+    },
+    {
+      id: v4(),
+      name: 'admin'
+    },
+    {
+      id: v4(),
+      name: 'kasir'
+    }
     ], {});
-
   },
 
   async down (queryInterface, Sequelize) {
@@ -32,8 +34,8 @@ module.exports = {
      * Add commands to revert seed here.
      *
      * Example:
-     * await queryInterface.bulkDelete('Roles', null, {});
+     * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('Roles', null, {});
+    await queryInterface.bulkDelete('Roles');
   }
 };

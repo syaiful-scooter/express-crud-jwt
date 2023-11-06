@@ -9,3 +9,4 @@ router.put("/:id", editMhs)
 router.delete("/:id", hapusMhs)
 
 module.exports = router
+
