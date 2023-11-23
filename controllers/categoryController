@@ -1,4 +1,5 @@
 const {Category} = require('../models')
+const asyncHandler = require('../middleware/asyncHandler')
 
 exports.getAllCategories = async (req, res) => {
   // console.log(req.requestTime);
@@ -53,9 +54,41 @@ exports.detailsCategory = async(req, res)=>{
   }
 }
 
-exports.updateCategory = async(req, res)=>{
-  try {
-    const id = req.params.id
+// update Category versi try catch 
+// exports.updateCategory = async(req, res)=>{
+//   try {
+//     const id = req.params.id
+//     await Category.update(req.body, {
+//       where: {
+//         id: id
+//       }
+//     });
+
+//     const updatedCategories = await Category.findByPk(id);
+    
+//     if(!updatedCategories){
+//       return res.status(404).json({
+//         status: "Fail",
+//         error: "Data id tidak ditemukan"
+//       })
+//     }
+
+//     return res.status(200).json({
+//       status:"Success",
+//       data : updatedCategories
+//     })
+    
+//   } catch (error) {
+//     console.log(error);
+//       return res.status(500).json({
+//         status:'Fail',
+//         error : "Server Down"
+//     })
+//   }
+// }
+// update category versi async handler ( catch error global )
+exports.updateCategory = asyncHandler(async(req, res)=>{
+  const id = req.params.id
     await Category.update(req.body, {
       where: {
         id: id
@@ -65,63 +98,69 @@ exports.updateCategory = async(req, res)=>{
     const updatedCategories = await Category.findByPk(id);
     
     if(!updatedCategories){
-      return res.status(404).json({
-        status: "Fail",
-        error: "Data id tidak ditemukan"
-      })
+      res.status(404);
+      throw new Error("Data kategori tidak ditemukan")
     }
 
     return res.status(200).json({
       status:"Success",
       data : updatedCategories
     })
+})
+
+// simpan Category versi try catch 
+// exports.storeCategory = async (req, res) => {
+  
+//   // let name =  req.body.name;
+//   // let description =  req.body.description;
+  
+//   // console.log( name);
+//   // console.log( description);
+  
+//     try {
+//       let {name, description} = req.body
+//       const newCategory = await Category.create(
+//           { 
+//             name,
+//             description 
+//           }
+//         );
+
+//         res.status(201).json({
+//           status: "Success",
+//           data : newCategory
+//         })
+//     } catch (error) {
+//         return res.status(400).json({
+//           status: "Fail",
+//           // error
+//           error : error.errors
+//       });
+//     }
     
-  } catch (error) {
-    console.log(error);
-      return res.status(500).json({
-        status:'Fail',
-        error : "Server Down"
-    })
-  }
-}
+//     // if(!name && !description){
+//     //     res.status(400).json({
+//     //         status: "fail",
+//     //         error: "Validasi Gagal"
+//     //     })
+//     // }
 
-exports.storeCategory = async (req, res) => {
-  
-  // let name =  req.body.name;
-  // let description =  req.body.description;
-  
-  // console.log( name);
-  // console.log( description);
-  
-    try {
-      let {name, description} = req.body
-      const newCategory = await Category.create(
-          { 
-            name,
-            description 
-          }
-        );
+// };
 
-        res.status(201).json({
-          status: "Success",
-          data : newCategory
-        })
-    } catch (error) {
-        return res.status(400).json({
-          status: "Fail",
-          // error
-          error : error.errors
-      });
-    }
-    
-    // if(!name && !description){
-    //     res.status(400).json({
-    //         status: "fail",
-    //         error: "Validasi Gagal"
-    //     })
-    // }
+exports.storeCategory = asyncHandler(async (req, res) => {
+  let {name, description} = req.body
+    const newCategory = await Category.create(
+        { 
+          name,
+          description 
+        }
+      );
 
-};
+      res.status(201).json({
+        status: "Success",
+        data : newCategory
+      })
+})
 
 exports.deleteCategory = async(req, res)=>{
   try {

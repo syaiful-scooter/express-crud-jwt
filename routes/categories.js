@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const {getAllCategories, storeCategory, detailsCategory, updateCategory, deleteCategory} = require('../controllers/categoryController');
+const {authMiddleware, permissionUser} = require("../middleware/UserMiddleware")
 
-
+const dataRole = ["admin", "user"]
+const dataRole2 = ["admin"]
 // Routing
 // router.get('/', (req, res) => {
 //   res.send('Hello World!')
@@ -23,16 +25,16 @@ const {getAllCategories, storeCategory, detailsCategory, updateCategory, deleteC
 // })
 
 // Read data dg findAll
-router.get('/', getAllCategories)
+router.get('/', authMiddleware, permissionUser(...dataRole2), getAllCategories)
 
 // Detail data 
-router.get('/:id', detailsCategory)
+router.get('/:id', authMiddleware, permissionUser(...dataRole), detailsCategory)
 
 // UPDATE data by param id 
-router.put('/:id', updateCategory)
+router.put('/:id', authMiddleware, permissionUser(...dataRole2), updateCategory)
 
 // DELETE data by param id 
-router.delete('/:id', deleteCategory)
+router.delete('/:id', authMiddleware, permissionUser(...dataRole2), deleteCategory)
 
 // router.post('/', (req, res) => {
 //   res.send('Got a POST request. dari method post')
